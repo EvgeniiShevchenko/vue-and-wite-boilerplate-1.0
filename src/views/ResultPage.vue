@@ -13,12 +13,6 @@
           <el-space style="width: 100%" direction="vertical">
             <el-image :src="item.Poster" fit="cover" />
             <text tag="h3">{{ item.Title }}</text>
-            <!-- <dl class="dl-grid">
-              <dt>Year:</dt>
-              <dd>{{ item.Year }}</dd>
-              <dt>Type:</dt>
-              <dd>{{ item.Type }}</dd>
-            </dl> -->
           </el-space>
         </el-carousel-item>
       </el-carousel>
@@ -37,7 +31,6 @@ const store = useStore();
 const { movies } = store;
 
 const goToDetailPage = (id) => {
-  console.log("🚀 ~ file: ResultPage.vue:31 ~ goToDetailPage ~ id:", id);
   router.push({ name: ROUTE_DETAIL, query: { id } });
 };
 </script>

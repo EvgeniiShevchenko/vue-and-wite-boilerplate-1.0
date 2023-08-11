@@ -1,6 +1,6 @@
 import axios from "axios";
 
-// const
+// constant
 import constants from "../constant";
 
 export const findMovieByTitle = (name) => {

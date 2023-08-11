@@ -14,21 +14,10 @@
       >
         <div>
           <el-form-item label="Poster">
-            <el-upload
-              ref="file"
-              :limit="1"
-              :on-exceed="uploadFile"
-              :auto-upload="true"
-            >
-              <template #trigger>
-                <el-button type="primary">select file</el-button>
-              </template>
-              <template #tip>
-                <div class="el-upload__tip text-red">
-                  limit 1 file, new file will cover the old file
-                </div>
-              </template>
-            </el-upload>
+            <UploadComponentBase
+              label="Select file"
+              @file-change="onChooseFile"
+            />
           </el-form-item>
         </div>
         <div>
@@ -49,7 +38,10 @@
           </el-space>
         </div>
         <div style="display: flex; width: 100%; justify-content: flex-end">
-          <el-button type="primary" @click="submitForm(formRef)"
+          <el-button
+            type="primary"
+            :disabled="isAddButtonDisable"
+            @click="submitForm(formRef)"
             >Add movie</el-button
           >
         </div>
@@ -59,8 +51,10 @@
 </template>
 
 <script setup>
-import { ref, reactive } from "vue";
-import { genFileId } from "element-plus";
+import { ref, reactive, computed } from "vue";
+
+// components
+import UploadComponentBase from "@/components/base/UploadComponentBase.vue";
 
 const movieForm = ref({
   Title: "",
@@ -68,7 +62,6 @@ const movieForm = ref({
   Year: null,
   Poster: "",
 });
-const file = ref(null);
 const formRef = ref();
 const rules = reactive({
   Title: [
@@ -91,13 +84,17 @@ const rules = reactive({
   ],
 });
 
-const uploadFile = (uploadFiles) => {
-  file.value.clearFiles();
+const isAddButtonDisable = computed(() => {
+  return (
+    !movieForm.value.Poster ||
+    !movieForm.value.Title ||
+    !movieForm.value.Director ||
+    !movieForm.value.Year
+  );
+});
 
-  const uploadFile = uploadFiles[0];
-
-  uploadFile.uid = genFileId();
-  file.value.handleStart(file);
+const onChooseFile = (formData, base64) => {
+  movieForm.value.Poster = base64;
 };
 
 const submitForm = (formEl) => {

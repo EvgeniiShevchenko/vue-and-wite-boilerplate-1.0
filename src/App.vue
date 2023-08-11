@@ -1,3 +1,15 @@
+<template>
+  <el-button
+    v-if="isShowMovieButton"
+    class="add-movie-btn"
+    type="primary"
+    @click="goToAddMoviePage"
+    >Add movie</el-button
+  >
+
+  <router-view></router-view>
+</template>
+
 <script setup>
 import { watch, ref } from "vue";
 import { useRoute } from "vue-router";
@@ -23,18 +35,6 @@ const goToAddMoviePage = () => {
   router.push({ name: ROUTE_ADD_MOVIE });
 };
 </script>
-
-<template>
-  <el-button
-    v-if="isShowMovieButton"
-    class="add-movie-btn"
-    type="primary"
-    @click="goToAddMoviePage"
-    >Add movie</el-button
-  >
-
-  <router-view></router-view>
-</template>
 
 <style scoped>
 .add-movie-btn {
